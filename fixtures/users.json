@@ -1,0 +1,19 @@
+{
+  "valido": {
+    "nome": "João Silva",
+    "senha": "Senha@2024"
+  },
+  "senhaInvalida": {
+    "nome": "Ana Teste",
+    "email": "ana@teste.com.br",
+    "senha": "123"
+  },
+  "checkoutValido": {
+    "firstName": "João",
+    "lastName": "Silva",
+    "company": "Empresa Teste LTDA",
+    "email": "joao@teste.com",
+    "zip": "01310-100",
+    "address": "Rua das Flores, 123, São Paulo"
+  }
+}
