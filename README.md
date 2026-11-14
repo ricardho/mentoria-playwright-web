@@ -1,85 +1,89 @@
 # Mentoria Playwright Web
 
-Projeto de automação de testes end-to-end utilizando **Playwright** com **JavaScript**, estruturado no padrão **Page Object Model (POM)**.
+**English** | [Português](README.pt-BR.md)
+
+End-to-end test automation project using **Playwright** with **JavaScript**, structured with the **Page Object Model (POM)** pattern.
+
+> *Mentoria* means "mentorship": this project was built during a mentoring program. Test names, Gherkin scenarios and reports are written in Portuguese.
 
 ---
 
-## Tecnologias
+## Technologies
 
-- [Playwright](https://playwright.dev/) — framework de automação de testes
+- [Playwright](https://playwright.dev/) — test automation framework
 - JavaScript (ES Modules)
 - GitHub Actions — CI/CD
 
 ---
 
-## Estrutura do Projeto
+## Project Structure
 
 ```
 mentoria-playwright-web/
 ├── .github/
 │   └── workflows/
-│       ├── push.yml          # Pipeline executada em todo push
-│       └── pullrequest.yml   # Pipeline executada em Pull Requests
+│       ├── push.yml          # Pipeline run on every push
+│       └── pullrequest.yml   # Pipeline run on Pull Requests
 ├── fixtures/
-│   ├── login.json            # Dados de login para os testes
-│   └── users.json            # Dados de usuários e checkout
+│   ├── login.json            # Login data for the tests
+│   └── users.json            # User and checkout data
 ├── support/
 │   └── pages/
-│       ├── LoginPage.js      # Page Object da página de Login
-│       ├── RegisterPage.js   # Page Object da página de Cadastro
-│       └── CheckoutPage.js   # Page Object da página de Checkout
+│       ├── LoginPage.js      # Login page Page Object
+│       ├── RegisterPage.js   # Sign-up page Page Object
+│       └── CheckoutPage.js   # Checkout page Page Object
 ├── tests/
 │   ├── e2e/
-│   │   ├── login.spec.js     # Testes de Login (6 cenários)
-│   │   ├── register.spec.js  # Testes de Cadastro (6 cenários)
-│   │   └── checkout.spec.js  # Testes de Checkout (5 cenários)
-│   ├── features/             # Cenários em Gherkin (BDD)
-│   └── reports/              # Relatórios de execução
-├── playwright.config.js      # Configuração do Playwright
+│   │   ├── login.spec.js     # Login tests (6 scenarios)
+│   │   ├── register.spec.js  # Sign-up tests (7 scenarios)
+│   │   └── checkout.spec.js  # Checkout tests (6 scenarios)
+│   ├── features/             # Gherkin scenarios (BDD)
+│   └── reports/              # Execution reports
+├── playwright.config.js      # Playwright configuration
 └── package.json
 ```
 
 ---
 
-## Pré-requisitos
+## Prerequisites
 
-- Node.js 18 ou superior
+- Node.js 18 or later
 - npm
 
 ---
 
-## Instalação
+## Installation
 
 ```bash
-# Clonar o repositório
-git clone https://github.com/<seu-usuario>/mentoria-playwright-web.git
+# Clone the repository
+git clone https://github.com/ricardho/mentoria-playwright-web.git
 cd mentoria-playwright-web
 
-# Instalar dependências
+# Install dependencies
 npm install
 
-# Instalar os navegadores do Playwright
+# Install the Playwright browsers
 npx playwright install
 ```
 
 ---
 
-## Como Executar os Testes
+## Running the Tests
 
 ```bash
-# Executar todos os testes (Chromium, Firefox e WebKit)
+# Run all tests (Chromium, Firefox and WebKit)
 npm test
 
-# Executar somente no Chromium
+# Run on Chromium only
 npm run test:chromium
 
-# Executar somente no Firefox
+# Run on Firefox only
 npm run test:firefox
 
-# Executar somente no WebKit (Safari)
+# Run on WebKit (Safari) only
 npm run test:webkit
 
-# Abrir o relatório HTML após execução
+# Open the HTML report after a run
 npm run report
 ```
 
@@ -87,10 +91,10 @@ npm run report
 
 ## Page Object Model
 
-Os Page Objects centralizam os seletores e ações de cada página, deixando os testes mais legíveis e fáceis de manter.
+The Page Objects centralize the selectors and actions of each page, making the tests more readable and easier to maintain.
 
 ```javascript
-// Exemplo de uso em um teste
+// Usage example in a test
 import { LoginPage } from '../../support/pages/LoginPage.js';
 
 test.beforeEach(async ({ page }) => {
@@ -106,47 +110,48 @@ test('Login com sucesso', async ({ page }) => {
 
 ---
 
-## Cenários de Teste
+## Test Scenarios
 
 ### Login (`tests/e2e/login.spec.js`)
-- Verificar elementos presentes na página de login
-- Login com sucesso usando e-mail e senha válidos
-- Tentativa de login com campos vazios
-- Login com e-mail inválido
-- Login com senha inválida
-- Redirecionamento para página de cadastro
+- Check the elements present on the login page
+- Successful login with a valid e-mail and password
+- Login attempt with empty fields
+- Login with an invalid e-mail
+- Login with an invalid password
+- Redirect to the sign-up page
 
-### Cadastro (`tests/e2e/register.spec.js`)
-- Verificar elementos da página de cadastro
-- Cadastro com sucesso com dados válidos
-- Cadastro sem preencher o campo Nome
-- Cadastro sem preencher o campo E-mail
-- Cadastro com e-mail em formato inválido
-- Cadastro com senha muito curta
+### Sign-up (`tests/e2e/register.spec.js`)
+- Check the elements of the sign-up page
+- Successful sign-up with valid data
+- Sign-up without filling in the Name field
+- Sign-up without filling in the E-mail field
+- Sign-up with an invalid e-mail format
+- Sign-up with a password that is too short
+- Sign-up without filling in the password
 
 ### Checkout (`tests/e2e/checkout.spec.js`)
-- Verificar estrutura completa da página de checkout
-- Preenchimento do formulário com dados válidos
-- Resumo do pedido exibe produtos e valores
-- Opções de pagamento visíveis
-- Finalizar pedido sem método de pagamento
-- Navegação do carrinho para o checkout
+- Check the full structure of the checkout page
+- Filling in the form with valid data
+- Order summary shows products and amounts
+- Payment options are visible
+- Placing an order without a payment method
+- Navigation from the cart to checkout
 
 ---
 
 ## CI/CD — GitHub Actions
 
-O projeto possui duas pipelines configuradas:
+The project has two pipelines configured:
 
-| Arquivo | Gatilho | Descrição |
+| File | Trigger | Description |
 |---|---|---|
-| `push.yml` | Todo `git push` | Executa todos os testes automaticamente |
-| `pullrequest.yml` | Pull Request para `master` | Valida os testes antes do merge |
+| `push.yml` | Every `git push` | Runs all tests automatically |
+| `pullrequest.yml` | Pull Request to `master` | Validates the tests before merging |
 
-Após cada execução, o relatório HTML é salvo como artefato no GitHub Actions por **3 dias**.
+After each run, the HTML report is saved as a GitHub Actions artifact for **3 days**.
 
 ---
 
-## Aplicação Testada
+## Application Under Test
 
 [https://automationpratice.com.br](https://automationpratice.com.br)
